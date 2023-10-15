@@ -7,7 +7,7 @@
 
 // Features:
 // 3 base layers: International English, Windows with swapped CTRL & GUI, and Mac with already customized keyboard layout (in software).
-// 4 auxiliary layers accessible by (modifier-style) fast hold & interrupt (or chording) of 4 otherwise normal thumb keys.
+// 4 auxiliary layers accessible by chording of 4 thumb keys, that is, by fast hold & interrupt of otherwise normal thumb keys. Much like when performing a Copy-Paste.
 // Auxiliary layers' lock-on with a shift key.
 // Scandinavian AE and OE, that act as C (copy) and V (paste) with CTRL or GUI (ä and ö are not used for shortcuts anyway).
 // Mirror keys for single-handed operation.
@@ -64,6 +64,8 @@
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))    // ~ is bitwise NOT
 #define BIT_TOGGLE(a,b) ((a) ^= (1ULL<<(b)))    // ^ is bitwise XOR
 #define BIT_CHECK(a,b) (!!((a) & (1ULL<<(b))))  // '!!' to make sure this returns 0 or 1
+
+
 
 // For saving user settings to EEPROM:          // Does not seem to work
 //typedef union {
@@ -276,8 +278,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {      // PROGMEM s
                                                                                     KC_MIRROR_NAVI, KC_ENTER,       _______,        _______,        KC_BSPACE,      KC_MIRROR_NAVI
   ),
   [MIRROR_MAC_LAYER] = LAYOUT_ergodox_pretty(
-    TG(SETTINGS_LAYER), KC_0,        KC_9,          KC_8,           KC_7,           KC_6,           KC_H,                                           KC_Y,           KC_5,           KC_4,           KC_3,           KC_2,           KC_1,           KC_ESCAPE,
-    TG(SETTINGS_LAYER), KC_LBRACKET, KC_P,          KC_O,           KC_I,           KC_U,           KC_N,                                           KC_EQUAL,       KC_T,           KC_R,           KC_E,           KC_W,           KC_Q,           KC_ESCAPE,
+    TG(SETTINGS_LAYER), KC_0,       KC_9,           KC_8,           KC_7,           KC_6,           KC_H,                                           KC_Y,           KC_5,           KC_4,           KC_3,           KC_2,           KC_1,           KC_ESCAPE,
+    TG(SETTINGS_LAYER), KC_LBRACKET,KC_P,           KC_O,           KC_I,           KC_U,           KC_N,                                           KC_EQUAL,       KC_T,           KC_R,           KC_E,           KC_W,           KC_Q,           KC_ESCAPE,
     XXXXXXX,        KC_QUOTE,       KC_SCOLON,      KC_L,           KC_K,           KC_J,                                                                           KC_G,           KC_F,           KC_D,           KC_S,           KC_A,           KC_TAB,
     XXXXXXX,        _______,        KC_SLASH,       KC_DOT,         KC_COMMA,       KC_M,           KC_B,                                           KC_MINUS,       KC_V,           KC_C,           KC_X,           KC_Z,           _______,        KC_GRAVE,
     _______,        _______,        _______,        _______,        _______,                                                                                                        _______,        _______,        _______,        _______,        _______,
@@ -286,10 +288,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {      // PROGMEM s
                                                                                     KC_MIRROR_NAVI, KC_ENTER,       _______,        _______,        KC_BSPACE,      KC_MIRROR_NAVI
   ),
   [MIRROR_NAVI_LAYER] = LAYOUT_ergodox_pretty(
-    _______,        _______,        _______,        _______,        _______,        _______,        _______,                                        _______,        _______,        _______,        _______,        _______,        _______,        TG(SETTINGS_LAYER),
-    _______,        KC_NEWSLASH,    KC_HOME,        KC_UP,          KC_END,         KC_NEWQUOTE,    _______,                                        _______,        KC_NEWEQUAL,    KC_HOME,        KC_UP,          KC_END,         KC_NEWBSLASH,   TG(SETTINGS_LAYER),
-    _______,        KC_PGUP,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_NEWDOT,                                                                      KC_NEWPLUS,     KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_PGUP,        _______,
-    _______,        KC_PGDOWN,      KC_NEWLBRACKET, KC_NEWASTERISK, KC_NEWRBRACKET, KC_NEWCOMMA,    _______,                                        _______,        KC_MINUS,       KC_NEWLABK,     KC_NEWEQUAL,    KC_NEWRABK,     KC_PGDOWN,      _______,
+    TG(SETTINGS_LAYER),  KC_0,      KC_9,           KC_8,           KC_7,           KC_6,           KC_NEWQUOTE,                                    KC_NEWEQUAL,    KC_5,           KC_4,           KC_3,           KC_2,           KC_1,           KC_ESCAPE,
+    TG(SETTINGS_LAYER), KC_NEWSLASH, KC_HOME,       KC_UP,          KC_END,         KC_NEWQUOTE,    KC_NEWDOT,                                      KC_NEWPLUS,     KC_NEWEQUAL,    KC_HOME,        KC_UP,          KC_END,         KC_NEWBSLASH,   KC_ESCAPE,
+    XXXXXXX,        KC_PGUP,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_NEWDOT,                                                                      KC_NEWPLUS,     KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_PGUP,        KC_TAB,
+    XXXXXXX,        KC_PGDOWN,      KC_NEWLBRACKET, KC_NEWASTERISK, KC_NEWRBRACKET, KC_NEWCOMMA,    KC_NEWCOMMA,                                    KC_MINUS,       KC_MINUS,       KC_NEWLABK,     KC_NEWEQUAL,    KC_NEWRABK,     KC_PGDOWN,      KC_GRAVE,
     _______,        _______,        _______,        _______,        _______,                                                                                                        _______,        _______,        _______,        _______,        _______,
                                                                                                     _______,        _______,        _______,        _______,
                                                                                                                     _______,        _______,
@@ -307,7 +309,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {      // PROGMEM s
   ),
   [KP_LAYER] = LAYOUT_ergodox_pretty(
     _______,        _______,        _______,        _______,        _______,        _______,        _______,                                        _______,        _______,        _______,        _______,        _______,        _______,        TG(SETTINGS_LAYER),
-    _______,        XXXXXXX,        KC_HOME,        KC_UP,          KC_END,         XXXXXXX,        _______,                                        _______,        KC_NEWCOMMA,    KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_NUMLOCK,     TG(SETTINGS_LAYER),
+    _______,        XXXXXXX,        KC_HOME,        KC_UP,          KC_END,         KC_NEWEQUAL,    _______,                                        _______,        KC_NEWCOMMA,    KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_NUMLOCK,     TG(SETTINGS_LAYER),
     _______,        KC_PGUP,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       XXXXXXX,                                                                        KC_KP_DOT,      KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_PLUS,     KC_KP_ASTERISK,
     _______,        KC_PGDOWN,      XXXXXXX,        XXXXXXX,        KC_ADIA,        KC_ODIA,        _______,                                        _______,        KC_KP_0,        KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_MINUS,    KC_KP_SLASH,
     _______,        _______,        _______,        _______,        _______,                                                                                                        _______,        _______,        _______,        _______,        _______,
@@ -328,8 +330,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {      // PROGMEM s
   [RNAVI_LAYER] = LAYOUT_ergodox_pretty(
     _______,        _______,        _______,        _______,        _______,        _______,        _______,                                        _______,        _______,        _______,        _______,        _______,        _______,        TG(SETTINGS_LAYER),
     _______,        KC_F13,         KC_F9,          KC_F8,          KC_F7,          XXXXXXX,        _______,                                        _______,        KC_NEWQUOTE,    KC_HOME,        KC_UP,          KC_END,         KC_NEWSLASH,    TG(SETTINGS_LAYER),
-    _______,        KC_F12,         KC_F6,          KC_F5,          KC_F4,          XXXXXXX,                                                                        KC_NEWDOT,      KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_PGUP,        _______,
-    _______,        KC_F11,         KC_F3,          KC_F2,          KC_F1,          KC_F10,         _______,                                        _______,        KC_NEWCOMMA,    KC_NEWLBRACKET, KC_NEWASTERISK, KC_NEWRBRACKET, KC_PGDOWN,      _______,
+    _______,        KC_F12,         KC_F6,          KC_F5,          KC_F4,          XXXXXXX,                                                                        KC_NEWDOT,      KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_PGUP,        XXXXXXX   ,
+    _______,        KC_F11,         KC_F3,          KC_F2,          KC_F1,          KC_F10,         _______,                                        _______,        KC_NEWCOMMA,    KC_NEWLBRACKET, KC_NEWASTERISK, KC_NEWRBRACKET, KC_PGDOWN,      XXXXXXX,
     _______,        _______,        _______,        _______,        _______,                                                                                                        _______,        _______,        _______,        _______,        _______,
                                                                                                     _______,        _______,        _______,        _______,
                                                                                                                     _______,        _______,
@@ -382,32 +384,144 @@ void keyboard_post_init_user(void) {                                         // 
 }
 
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
+  //  HSV_RED     = {0,255,255}        HSV_CYAN    = {129,255,255}
+  //  HSV_GREEN   = {86,255,255}       HSV_MAGENTA = {215,255,255}
+  //  HSV_BLUE    = {172,255,255}      HSV_YELLOW  = {43,255,255}
+  //  HSV_WHITE   = {0,0,255}          HSV_BLACK   = {0,0,0}
   
-  
-    [CAPS_LAYER] = { {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
-  
-    [CAPS_MAC_LAYER] = { {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
+    /* LEFT SIDE LEDS MIRRORED */                                            /* RIGHT SIDE LEDS */
+  [CAPS_LAYER] = {
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                                             {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                   {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  } },
 
-    [MIRROR_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [CAPS_MAC_LAYER] = {
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                                                                                             {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+    {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  },
+                   {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  } },
 
-    [MIRROR_MAC_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,255}, {0,255,255}, {86,255,255}, {172,255,255}, {43,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [MIRROR_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                                                                              {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                                                                              {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+    {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+    {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [MIRROR_NAVI_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {86,255,255}, {0,0,0}, {0,0,255}, {0,0,0}, {129,255,255}, {0,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {172,255,255}, {43,255,255}, {86,255,255}, {43,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {43,255,255}, {0,0,0}, {0,0,255}, {0,0,0}, {129,255,255}, {43,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {43,255,255}, {86,255,255}, {215,255,255}, {86,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [MIRROR_MAC_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                                                                              {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                                                                              {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+    {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+    {HSV_WHITE  }, {HSV_RED    }, {HSV_GREEN  }, {HSV_BLUE   }, {HSV_YELLOW },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [NUM_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {129,255,255}, {86,255,255}, {215,255,255}, {0,255,255}, {86,255,255}, {172,255,255}, {172,255,255}, {0,255,255}, {86,255,255}, {172,255,255}, {0,0,0}, {172,255,255}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {0,255,255}, {0,255,255}, {0,0,0}, {0,0,0}, {0,255,255}, {0,255,255}, {0,255,255}, {0,0,0}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [MIRROR_NAVI_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_GREEN  }, {HSV_BLACK  }, {HSV_WHITE  }, {HSV_BLACK  }, {HSV_CYAN   },
+                                                                              {HSV_RED    }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLACK  },
+                                                                              {HSV_BLUE   }, {HSV_YELLOW }, {HSV_GREEN  }, {HSV_YELLOW }, {HSV_BLACK  },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_YELLOW }, {HSV_BLACK  }, {HSV_WHITE  }, {HSV_BLACK  }, {HSV_CYAN   },
+    {HSV_YELLOW }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLACK  },
+    {HSV_YELLOW }, {HSV_GREEN  }, {HSV_MAGENTA}, {HSV_GREEN  }, {HSV_BLACK  },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [KP_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,255}, {43,255,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,255}, {0,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {172,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [NUM_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_RED    }, {HSV_CYAN   }, {HSV_GREEN  }, {HSV_MAGENTA}, {HSV_RED    },
+                                                                              {HSV_GREEN  }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_RED    }, {HSV_GREEN  },
+                                                                              {HSV_BLUE   }, {HSV_BLACK  }, {HSV_BLUE   }, {HSV_RED    }, {HSV_BLACK  },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_BLACK  },
+    {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_BLACK  },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [LNAVI_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,0}, {0,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {0,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {86,255,255}, {0,0,0}, {0,0,255}, {0,0,0}, {129,255,255}, {0,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {172,255,255}, {43,255,255}, {86,255,255}, {43,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [KP_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_BLACK  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_YELLOW },
+                                                                              {HSV_BLACK  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_RED    },
+                                                                              {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLUE   },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_WHITE  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [RNAVI_LAYER] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {43,255,255}, {0,0,0}, {0,0,255}, {0,0,0}, {129,255,255}, {43,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {43,255,255}, {86,255,255}, {215,255,255}, {86,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {172,255,255}, {172,255,255}, {172,255,255}, {0,0,0}, {0,0,0}, {172,255,255}, {172,255,255}, {172,255,255}, {0,0,0}, {172,255,255}, {172,255,255}, {172,255,255}, {172,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [LNAVI_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_RED    }, {HSV_BLACK  }, {HSV_WHITE  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_RED    }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLACK  },
+                                                                              {HSV_RED    }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_BLACK  },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_GREEN  }, {HSV_BLACK  }, {HSV_WHITE  }, {HSV_BLACK  }, {HSV_CYAN   },
+    {HSV_RED    }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLACK  },
+    {HSV_BLUE   }, {HSV_YELLOW }, {HSV_GREEN  }, {HSV_YELLOW }, {HSV_BLACK  },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [WIN_ALT_LAYER] = { {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255} },
+  [RNAVI_LAYER] = {
+                                                                              {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+                                                                              {HSV_YELLOW }, {HSV_BLACK  }, {HSV_WHITE  }, {HSV_BLACK  }, {HSV_CYAN   },
+                                                                              {HSV_YELLOW }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_BLACK  },
+                                                                              {HSV_YELLOW }, {HSV_GREEN  }, {HSV_MAGENTA}, {HSV_GREEN  }, {HSV_BLACK  },
+                                                                                             {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLACK  },
+    {HSV_BLACK  }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLACK  },
+    {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLUE   }, {HSV_BLACK  },
+                   {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  }, {HSV_BLACK  } },
 
-    [GAME_LAYER] = { {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {0,0,255}, {86,255,255}, {86,255,255}, {86,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255} },
+  [WIN_ALT_LAYER] = {
+                                                                              {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+                                                                              {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+                                                                              {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+                                                                              {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+                                                                                             {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+    {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+    {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+    {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+    {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    },
+                   {HSV_RED    }, {HSV_RED    }, {HSV_RED    }, {HSV_RED    } },
 
-};
-
+  [GAME_LAYER] = {
+                                                                              {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+                                                                              {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+                                                                              {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+                                                                              {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+                                                                                             {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+    {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+    {HSV_GREEN  }, {HSV_GREEN  }, {HSV_WHITE  }, {HSV_GREEN  }, {HSV_GREEN  },
+    {HSV_GREEN  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_WHITE  }, {HSV_GREEN  },
+    {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  },
+                   {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  }, {HSV_GREEN  } }
+  };
 
 void set_layer_color(int layer) {
   for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
